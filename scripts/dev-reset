@@ -1,0 +1,5 @@
+#!/bin/bash -exu
+
+cd datalayer
+bundle exec rails db:create || true
+./bin/rerun_personas_migrations

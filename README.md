@@ -1,24 +1,25 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## development setup
 
-Things you may want to cover:
+install
 
-* Ruby version
+```shell
+git submodule update --recursive --init --force
+bundle && cd datalayer && bundle && cd -
+```
 
-* System dependencies
+config
 
-* Configuration
+```shell
+cd datalayer
+cp config/database_developer_example.yml config/database.yml
+# edit config/database.yml
+```
 
-* Database creation
+reset db && startup
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```shell
+./scrips/dev-reset
+PORT=4321 ./scripts/start-dev-server
+```

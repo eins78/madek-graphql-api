@@ -1,3 +1,5 @@
+$:.push File.expand_path('../../datalayer/lib', __FILE__)
+
 require_relative 'boot'
 
 require "rails"
