@@ -1,0 +1,12 @@
+{
+  "projects": {
+    "madek-graphql-api": {
+      "schemaPath": "app/graphql/schema.graphql",
+      "extensions": {
+        "endpoints": {
+          "dev": "http://localhost:4321/graphql"
+        }
+      }
+    }
+  }
+}
