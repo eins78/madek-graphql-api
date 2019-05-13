@@ -1,13 +1,16 @@
-type Mutation {
-  """
-  An example field added by the generator
-  """
-  testField: String!
+"""
+An ISO 8601-encoded datetime
+"""
+scalar ISO8601DateTime
+
+type MediaEntry {
+  createdAt: ISO8601DateTime
+  id: String
 }
 
 type Query {
   """
-  An example field added by the generator
+  Find a MediaEntry by ID
   """
-  testField: String!
+  mediaEntry(id: ID!): MediaEntry
 }
