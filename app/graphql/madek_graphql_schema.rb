@@ -3,6 +3,6 @@ class MadekGraphqlSchema < GraphQL::Schema
   use GraphQL::Execution::Interpreter
   # use GraphQL::Analysis::AST
 
-  mutation(Types::MutationType)
+  # mutation(Types::MutationType)
   query(Types::QueryType)
 end
