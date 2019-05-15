@@ -6,6 +6,7 @@ scalar ISO8601DateTime
 type MediaEntry {
   createdAt: ISO8601DateTime
   id: String
+  title: String
 }
 
 type Query {

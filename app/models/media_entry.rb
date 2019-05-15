@@ -10,5 +10,4 @@ class MediaEntry < ApplicationRecord
   scope :public_visible, -> { where(get_metadata_and_previews: true) }
   scope :published, -> { where(is_published: true) }
   default_scope { published.public_visible }
-
 end
