@@ -1,0 +1,30 @@
+{
+  "name": "madek-graphql-api-example-gallery-slideshow",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start",
+    "now-build": "next build"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@fancyapps/fancybox": "^3.5.7",
+    "bootstrap": "^4.3.1",
+    "graphql-hooks": "^3.2.1",
+    "graphql-hooks-memcache": "^1.0.4",
+    "graphql-hooks-ssr": "^1.0.1",
+    "isomorphic-unfetch": "^3.0.0",
+    "jquery": "^3.4.1",
+    "next": "8.1.0",
+    "prop-types": "^15.7.2",
+    "react": "16.8.6",
+    "react-dom": "16.8.6"
+  },
+  "browser": {
+    "graphql-hooks-ssr": false
+  }
+}

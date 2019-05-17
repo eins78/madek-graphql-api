@@ -1,0 +1,36 @@
+/* global */
+* {
+  font-family: Menlo, Monaco, "Lucida Console", "Liberation Mono",
+    "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Courier New", monospace,
+    serif;
+}
+body {
+  margin: 0;
+  padding: 25px 50px;
+}
+
+/* page header / main nav */
+header.page-header {
+  margin-bottom: 25px;
+}
+header.page-header a {
+  font-size: 14px;
+  margin-right: 15px;
+  text-decoration: none;
+}
+header.page-header .is-active {
+  text-decoration: underline;
+}
+
+/* error messages */
+aside.error-message {
+  padding: 1.5em;
+  font-size: 14px;
+  color: white;
+  background-color: crimson;
+}
+
+aside.error-message .error-message-details {
+  margin-top: 3em;
+  font-size: 14px;
+}
