@@ -7,6 +7,9 @@ class MediaEntry < ApplicationRecord
   #
   # has_one :media_file
 
+  include Concerns::Users::Creator
+  include Concerns::Users::Responsible
+
   scope :public_visible, -> { where(get_metadata_and_previews: true) }
   scope :published, -> { where(is_published: true) }
   default_scope { published.public_visible }
