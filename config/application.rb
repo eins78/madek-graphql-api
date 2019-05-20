@@ -15,6 +15,9 @@ require "action_cable/engine"
 require "sprockets/railtie" if Rails.env.development?
 require "rails/test_unit/railtie"
 
+require_relative '../datalayer/lib/madek/system'
+require_relative '../datalayer/lib/madek/constants'
+
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
@@ -33,5 +36,9 @@ module MadekGraphqlApi
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+
+    config.paths["config/initializers"] <<  \
+      Rails.root.join('datalayer', 'initializers', '030_factory_girl.rb')
   end
 end
+
