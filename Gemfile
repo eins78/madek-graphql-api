@@ -28,6 +28,9 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'pry'
   gem 'awesome_print'
+  gem 'chronic_duration'
+  gem 'uuidtools'
+  gem 'factory_girl', '~> 4.8.1'
 end
 
 group :development do
@@ -41,6 +44,8 @@ end
 group :test do
   gem 'rspec-rails'
   gem 'rspec-graphql_matchers'
+  gem 'faker'
+  gem 'pg_tasks', git: 'https://github.com/drtom/rails_pg-tasks', branch: 'master_rails_5'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
