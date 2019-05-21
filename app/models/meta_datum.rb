@@ -24,8 +24,8 @@ class MetaDatum < ApplicationRecord
 
   # NOTE: need to overwrite the default scope, Rails 5 has '#rescope'
   belongs_to :media_entry, -> { where(is_published: [true, false]) }
-  belongs_to :collection
-  belongs_to :filter_set
+  belongs_to :collection, optional: true
+  belongs_to :filter_set, optional: true
 
   # TODO: create DB constraint for this
   # validates_presence_of :created_by, on: :create

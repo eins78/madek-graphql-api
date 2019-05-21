@@ -7,6 +7,8 @@ class MediaEntry < ApplicationRecord
   #
   # has_one :media_file
 
+  has_many :meta_data
+
   include Concerns::Users::Creator
   include Concerns::Users::Responsible
 
