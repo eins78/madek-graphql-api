@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 describe Types::MediaEntryType do
   let(:media_entry) { FactoryGirl.create(:media_entry_with_title) }
   let(:response_data) { response_to_h[:data][:mediaEntry] }
