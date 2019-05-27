@@ -1,0 +1,69 @@
+describe 'getCollection' do
+  before(:all) do
+    FactoryGirl.build(:meta_datum_title_with_collection).save(validate: false)
+    # When I try to just create :meta_datum_title_with_collection I get
+    # validation error - media entry must exist - even though there is
+    # collection for the meta data.
+    # I couldn't find why so it's TODO but I want to move forward now
+    @collection = Collection.last
+    @collection.update(get_metadata_and_previews: true)
+    fill_collection_with_media_entries_with_images(@collection, 4)
+    add_meta_data_titles_to_collection_media_entries(@collection)
+  end
+
+  let(:collection_keys) { %w(id url metaData childMediaEntries) }
+  let(:media_entry_keys) { %w(id url metaData mediaFile) }
+  let(:media_file_keys) { %w(previews) }
+  let(:preview_keys) { %w(id url contentType mediaType sizeClass) }
+  let(:meta_data_keys) { %w(id metaKey value) }
+  let(:collection_size) { 4 }
+  let(:query) { QueriesHelpers::CollectionQuery.new.query }
+  let(:variables) { { 'id' => @collection.id, 'mediaTypes' => 'IMAGE' } }
+  let(:response_collection) { response_to_h(query, variables)['data']['set'] }
+  let(:response_media_entry) { sample_node_of(response_collection['childMediaEntries']) }
+  let(:response_media_file) { response_media_entry['mediaFile'] }
+  let(:response_media_file_preview) { sample_node_of(response_media_file['previews']) }
+
+  it 'loads collections by ID' do
+    expect(response_collection['id']).to eq(@collection.id)
+    expect(response_collection['childMediaEntries']['edges'].size).
+      to eq(collection_size)
+    expect(response_collection.keys).to eq(collection_keys)
+  end
+
+  it "returns collections' media entries as relay connection" do
+    expect(response_media_entry.keys).to eq(media_entry_keys)
+  end
+
+  it 'returns collection with only publicly visible media entries' do
+    media_entries = @collection.media_entries
+    media_entries.last.update(get_metadata_and_previews:false)
+
+    expect(media_entries.size).to eq(collection_size)
+    expect(response_collection['childMediaEntries']['edges'].size).
+      to eq(collection_size - 1)
+  end
+
+  it "returns media file for each media entry" do
+    expect(response_media_file.keys).to eq(%w(previews))
+  end
+
+  it "returns media file's previews as relay connection" do
+    expect(response_media_file_preview.keys).to eq(preview_keys)
+  end
+
+  it 'returns meta data for collection and media entries as relay connection' do
+    expect(sample_node_of(response_collection['metaData']).keys).
+      to eq(meta_data_keys)
+    expect(sample_node_of(response_collection['metaData'])['metaKey']['id']).
+      to be
+    expect(sample_node_of(response_collection['metaData'])['value']['string']).
+      to be
+    expect(sample_node_of(response_media_entry['metaData']).keys).
+      to eq(meta_data_keys)
+    expect(sample_node_of(response_media_entry['metaData'])['metaKey']['id']).
+      to be
+    expect(sample_node_of(response_media_entry['metaData'])['value']['string']).
+      to be
+  end
+end

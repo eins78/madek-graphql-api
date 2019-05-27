@@ -1,11 +1,11 @@
 class MediaEntry < ApplicationRecord
-  # has_many :collection_media_entry_arcs,
-  #          class_name: 'Arcs::CollectionMediaEntryArc'
-  # has_many :parent_collections,
-  #          through: :collection_media_entry_arcs,
-  #          source: :collection
-  #
-  # has_one :media_file
+  has_many :collection_media_entry_arcs,
+            class_name: 'Arcs::CollectionMediaEntryArc'
+  has_many :parent_collections,
+            through: :collection_media_entry_arcs,
+            source: :collection
+
+  has_one :media_file
 
   has_many :meta_data
 
@@ -17,6 +17,6 @@ class MediaEntry < ApplicationRecord
   default_scope { published.public_visible }
 
   def title
-    meta_data.where(meta_key_id: 'madek_core:title').take.string
+    meta_data.where(meta_key_id: 'madek_core:title').take&.string
   end
 end

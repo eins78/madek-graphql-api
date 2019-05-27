@@ -1,3 +1,115 @@
+type Collection {
+  childMediaEntries(
+    """
+    Returns the elements in the list that come after the specified cursor.
+    """
+    after: String
+
+    """
+    Returns the elements in the list that come before the specified cursor.
+    """
+    before: String
+
+    """
+    Returns the first _n_ elements from the list.
+    """
+    first: Int
+
+    """
+    Returns the last _n_ elements from the list.
+    """
+    last: Int
+    mediaTypes: MediaEntryMediaTypesEnum
+    orderBy: OrderByEnum
+  ): MediaEntryConnection
+  createdAt: ISO8601DateTime
+  getMetadataAndPreviews: Boolean
+  id: String!
+  layout: String
+  metaData(
+    """
+    Returns the elements in the list that come after the specified cursor.
+    """
+    after: String
+
+    """
+    Returns the elements in the list that come before the specified cursor.
+    """
+    before: String
+
+    """
+    Returns the first _n_ elements from the list.
+    """
+    first: Int
+
+    """
+    Returns the last _n_ elements from the list.
+    """
+    last: Int
+  ): MetaDataConnection
+  responsibleUserId: String
+  sets(
+    """
+    Returns the elements in the list that come after the specified cursor.
+    """
+    after: String
+
+    """
+    Returns the elements in the list that come before the specified cursor.
+    """
+    before: String
+
+    """
+    Returns the first _n_ elements from the list.
+    """
+    first: Int
+
+    """
+    Returns the last _n_ elements from the list.
+    """
+    last: Int
+    orderBy: OrderByEnum
+  ): CollectionConnection
+  sorting: String
+  updatedAt: ISO8601DateTime
+  url: String
+}
+
+"""
+The connection type for Collection.
+"""
+type CollectionConnection {
+  """
+  A list of edges.
+  """
+  edges: [CollectionEdge]
+
+  """
+  A list of nodes.
+  """
+  nodes: [Collection]
+
+  """
+  Information to aid in pagination.
+  """
+  pageInfo: PageInfo!
+}
+
+"""
+An edge in a connection.
+"""
+type CollectionEdge {
+  """
+  A cursor for use in pagination.
+  """
+  cursor: String!
+
+  """
+  The item at the end of the edge.
+  """
+  node: Collection
+}
+
 """
 An ISO 8601-encoded datetime
 """
@@ -5,13 +117,257 @@ scalar ISO8601DateTime
 
 type MediaEntry {
   createdAt: ISO8601DateTime
-  id: String
+  id: String!
+  mediaFile: MediaFile
+  metaData(
+    """
+    Returns the elements in the list that come after the specified cursor.
+    """
+    after: String
+
+    """
+    Returns the elements in the list that come before the specified cursor.
+    """
+    before: String
+
+    """
+    Returns the first _n_ elements from the list.
+    """
+    first: Int
+
+    """
+    Returns the last _n_ elements from the list.
+    """
+    last: Int
+  ): MetaDataConnection
   title: String
+  url: String
+}
+
+"""
+The connection type for MediaEntry.
+"""
+type MediaEntryConnection {
+  """
+  A list of edges.
+  """
+  edges: [MediaEntryEdge]
+
+  """
+  A list of nodes.
+  """
+  nodes: [MediaEntry]
+
+  """
+  Information to aid in pagination.
+  """
+  pageInfo: PageInfo!
+}
+
+"""
+An edge in a connection.
+"""
+type MediaEntryEdge {
+  """
+  A cursor for use in pagination.
+  """
+  cursor: String!
+
+  """
+  The item at the end of the edge.
+  """
+  node: MediaEntry
+}
+
+"""
+Media entry media types
+"""
+enum MediaEntryMediaTypesEnum {
+  IMAGE
+}
+
+type MediaFile {
+  previews(
+    """
+    Returns the elements in the list that come after the specified cursor.
+    """
+    after: String
+
+    """
+    Returns the elements in the list that come before the specified cursor.
+    """
+    before: String
+
+    """
+    Returns the first _n_ elements from the list.
+    """
+    first: Int
+
+    """
+    Returns the last _n_ elements from the list.
+    """
+    last: Int
+    mediaTypes: PreviewMediaTypesEnum
+  ): PreviewConnection
+}
+
+type MetaData {
+  id: String
+  metaKey: MetaKey
+  value: Value
+}
+
+"""
+The connection type for MetaData.
+"""
+type MetaDataConnection {
+  """
+  A list of edges.
+  """
+  edges: [MetaDataEdge]
+
+  """
+  A list of nodes.
+  """
+  nodes: [MetaData]
+
+  """
+  Information to aid in pagination.
+  """
+  pageInfo: PageInfo!
+}
+
+"""
+An edge in a connection.
+"""
+type MetaDataEdge {
+  """
+  A cursor for use in pagination.
+  """
+  cursor: String!
+
+  """
+  The item at the end of the edge.
+  """
+  node: MetaData
+}
+
+type MetaKey {
+  id: String!
+}
+
+"""
+Paremeter for ordering resources
+"""
+enum OrderByEnum {
+  CREATED_AT_ASC
+  CREATED_AT_DESC
+}
+
+"""
+Information about pagination in a connection.
+"""
+type PageInfo {
+  """
+  When paginating forwards, the cursor to continue.
+  """
+  endCursor: String
+
+  """
+  When paginating forwards, are there more items?
+  """
+  hasNextPage: Boolean!
+
+  """
+  When paginating backwards, are there more items?
+  """
+  hasPreviousPage: Boolean!
+
+  """
+  When paginating backwards, the cursor to continue.
+  """
+  startCursor: String
+}
+
+type Preview {
+  contentType: String
+  id: String!
+  mediaType: PreviewMediaTypesEnum
+  sizeClass: PreviewSizeClassesEnum
+  url: String
+}
+
+"""
+The connection type for Preview.
+"""
+type PreviewConnection {
+  """
+  A list of edges.
+  """
+  edges: [PreviewEdge]
+
+  """
+  A list of nodes.
+  """
+  nodes: [Preview]
+
+  """
+  Information to aid in pagination.
+  """
+  pageInfo: PageInfo!
+}
+
+"""
+An edge in a connection.
+"""
+type PreviewEdge {
+  """
+  A cursor for use in pagination.
+  """
+  cursor: String!
+
+  """
+  The item at the end of the edge.
+  """
+  node: Preview
+}
+
+"""
+Preview media types
+"""
+enum PreviewMediaTypesEnum {
+  IMAGE
+}
+
+"""
+Preview size class
+"""
+enum PreviewSizeClassesEnum {
+  LARGE
+  MAXIMUM
+  MEDIUM
+  SMALL
+  SMALL_125
+  X_LARGE
 }
 
 type Query {
   """
+  Find all MediaEntries
+  """
+  allMediaEntries(first: Int, orderBy: OrderByEnum): [MediaEntry!]
+
+  """
   Find a MediaEntry by ID
   """
   mediaEntry(id: ID!): MediaEntry
+
+  """
+  Find a Collection by ID
+  """
+  set(id: ID!, orderBy: OrderByEnum): Collection!
+}
+
+type Value {
+  string: String
 }
