@@ -35,10 +35,10 @@ install
 ```shell
 git clone https://github.com/Madek/madek-graphql-api && cd madek-graphql-api
 git submodule update --recursive --init --force
-bundle && cd datalayer && bundle && cd -
+./scripts/bundle
 ```
 
-config
+initial config
 
 ```shell
 cd datalayer

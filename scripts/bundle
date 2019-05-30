@@ -1,0 +1,7 @@
+#!/bin/bash -exu
+
+cd datalayer
+bundle
+
+cd -
+bundle
