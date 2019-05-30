@@ -65,6 +65,7 @@ query {
   mediaEntry(id: "06622f9c-8f41-43eb-a4a4-fd3b8444de64") {
     id
     createdAt
+    title
   }
 }
 ```
@@ -76,7 +77,8 @@ query {
   "data": {
     "mediaEntry": {
       "id": "06622f9c-8f41-43eb-a4a4-fd3b8444de64",
-      "createdAt": "2012-10-16 13:57:54 UTC"
+      "createdAt": "2012-10-16 13:57:54 UTC",
+      "title": "Diplom"
     }
   }
 }

@@ -12,8 +12,11 @@ require "action_controller/railtie"
 require "action_mailer/railtie"
 require "action_view/railtie"
 require "action_cable/engine"
-# require "sprockets/railtie"
+require "sprockets/railtie" if Rails.env.development?
 require "rails/test_unit/railtie"
+
+require_relative '../datalayer/lib/madek/system'
+require_relative '../datalayer/lib/madek/constants'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -37,5 +40,9 @@ module MadekGraphqlApi
     # madek-datalayer-specific settings:
     config.active_record.schema_format = :sql
     config.active_record.timestamped_migrations = false
+
+    config.paths["config/initializers"] <<  \
+      Rails.root.join('datalayer', 'initializers', '030_factory_girl.rb')
   end
 end
+
