@@ -2,6 +2,10 @@
 
 ./scripts/bundle
 
-cd datalayer
-bundle exec rails db:create || true
-./bin/rerun_personas_migrations
+for env in development test; do
+  export RAILS_ENV=$env
+  cd datalayer
+  bundle exec rails db:create || true
+  ./bin/rerun_personas_migrations
+  cd -
+done
