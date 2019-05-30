@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 describe Types::MediaEntryType do
 
   context 'type definition' do
