@@ -1,10 +1,10 @@
 class MediaEntry < ApplicationRecord
-  # has_many :collection_media_entry_arcs,
-  #          class_name: 'Arcs::CollectionMediaEntryArc'
-  # has_many :parent_collections,
-  #          through: :collection_media_entry_arcs,
-  #          source: :collection
-  #
+  has_many :collection_media_entry_arcs,
+            class_name: 'Arcs::CollectionMediaEntryArc'
+  has_many :parent_collections,
+            through: :collection_media_entry_arcs,
+            source: :collection
+
   # has_one :media_file
 
   has_many :meta_data
