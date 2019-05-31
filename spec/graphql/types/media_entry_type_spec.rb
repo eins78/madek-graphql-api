@@ -4,16 +4,13 @@ describe Types::MediaEntryType do
 
     subject { Types::MediaEntryType }
 
-    it 'defines a field id of String type' do
-      expect(subject).to have_field(:id).that_returns(type('String'))
-    end
+    { id: 'String',
+      title: 'String',
+      createdAt: 'ISO8601DateTime' }.each do |field, type|
 
-    it 'defines a field created_at of String type' do
-      expect(subject).to have_field(:createdAt).that_returns(type('ISO8601DateTime'))
-    end
-
-    it 'defines a field title of String type' do
-      expect(subject).to have_field(:id).that_returns(type('String'))
+      it "defines a field #{field} of #{type} type" do
+        expect(subject).to have_field(field).that_returns(type(type))
+      end
     end
   end
 
