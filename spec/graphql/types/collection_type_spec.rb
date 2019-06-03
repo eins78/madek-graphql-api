@@ -21,10 +21,4 @@ describe Types::CollectionType do
       expect(subject.fields['mediaEntries'].connection?).to be(true)
     end
   end
-
-
-  #todo move type method to helper
-  def type(type)
-    "GraphQL::Types::#{type}"
-  end
 end
