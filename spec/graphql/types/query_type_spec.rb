@@ -107,15 +107,8 @@ describe Types::QueryType do
       end
 
       context 'response' do
-        before(:all) do
-          @collection = FactoryGirl.create(:collection,
-                                            sorting: 'created_at DESC')
-          6.times do
-            @collection.media_entries << FactoryGirl.create(:media_entry_with_title)
-          end
-        end
-
-        let(:collection) { @collection }
+        let(:collection) { FactoryGirl.create(:collection,
+                                               sorting: 'created_at DESC') }
         let(:first) { 2 }
         let(:query) { collection_query(collection.id, first: first) }
         let(:response_data) { response_as_hash(query)[:data][:collection] }
@@ -154,6 +147,8 @@ describe Types::QueryType do
         # to shorten code below
 
         it 'contains first n MediaEntries from collection as edges - an array of nodes' do
+          fill_collection_with_media_entries(collection)
+
           edges = response_data[:mediaEntries][:edges]
           node_key = edges.map(&:keys).flatten.uniq
           ids = edges.map { |n| n[:node][:id] }
@@ -164,6 +159,8 @@ describe Types::QueryType do
         end
 
         it 'contains first n MediaEntries after cursor' do
+          fill_collection_with_media_entries(collection)
+
           query = collection_query(
             collection.id,
             first: first,
@@ -176,6 +173,8 @@ describe Types::QueryType do
         end
 
         it 'contains MediaEntries ordered as speficied in query' do
+          fill_collection_with_media_entries(collection)
+
           query = collection_query(
             collection.id,
             first: collection.media_entries.length,
@@ -193,6 +192,11 @@ describe Types::QueryType do
             to eq(%w(endCursor startCursor hasPreviousPage hasNextPage))
         end
       end
+    end
+
+    def fill_collection_with_media_entries(collection)
+      collection.media_entries = FactoryGirl.create_list(:media_entry_with_title,
+                                                          4)
     end
 
     def stringified_created_ats_from_response(response)
