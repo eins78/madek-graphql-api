@@ -18,7 +18,7 @@ describe Types::QueryType do
 
         let(:media_entry) { FactoryGirl.create(:media_entry_with_title) }
         let(:query) { media_entry_query(media_entry.id) }
-        let(:response_data) { response_as_hash(query)[:data][:mediaEntry] }
+        let(:response_data) { response_data_as_hash(query)[:mediaEntry] }
 
         it 'returns id' do
           media_entry
@@ -61,7 +61,7 @@ describe Types::QueryType do
 
         context 'for query with no arguments specified' do
           let(:query) { media_entries_query }
-          let(:response_data) { response_as_hash(query)[:data][:allMediaEntries] }
+          let(:response_data) { response_data_as_hash(query)[:allMediaEntries] }
           let(:stringified_created_ats) { MediaEntry.order('created_at DESC').
                                           first(100).
                                           pluck(:created_at).
@@ -76,7 +76,7 @@ describe Types::QueryType do
         context 'for query with arguments' do
           let(:query) { media_entries_query(first: 11,
                                             order_by: 'CREATED_AT_ASC') }
-          let(:response_data) { response_as_hash(query)[:data][:allMediaEntries] }
+          let(:response_data) { response_data_as_hash(query)[:allMediaEntries] }
           let(:stringified_created_ats) { MediaEntry.order('created_at ASC').
                                           first(11).
                                           pluck(:created_at).
@@ -125,8 +125,8 @@ describe Types::QueryType do
       GRAPHQL
     end
 
-    def response_as_hash(query)
-      MadekGraphqlSchema.execute(query).to_h.with_indifferent_access
+    def response_data_as_hash(query)
+      MadekGraphqlSchema.execute(query).to_h.deep_symbolize_keys[:data]
     end
   end
 end
