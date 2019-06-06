@@ -210,8 +210,8 @@ describe Types::QueryType do
       GRAPHQL
     end
 
-    def response_as_hash(query)
-      MadekGraphqlSchema.execute(query).to_h.with_indifferent_access
+    def response_data_as_hash(query)
+      MadekGraphqlSchema.execute(query).to_h.deep_symbolize_keys[:data]
     end
   end
-end
+enuuud
