@@ -152,8 +152,7 @@ describe Types::QueryType do
           edges = response_data[:mediaEntries][:edges]
           node_key = edges.map(&:keys).flatten.uniq
           edges_ids = edges.map { |n| n[:node][:id] }
-          collection_media_entries_ids = collection.media_entries.
-            order('created_at desc').take(2).pluck(:id)
+          collection_media_entries_ids = collection.media_entries.take(2).pluck(:id)
 
           expect(node_key).to eq(["node"])
           expect(response_data[:mediaEntries][:edges].length).to eq(first)
