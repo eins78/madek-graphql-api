@@ -3,7 +3,9 @@ class MadekGraphqlSchema < GraphQL::Schema
   use GraphQL::Execution::Interpreter
   # use GraphQL::Analysis::AST
 
-  # mutation(Types::MutationType)
+  max_depth 20
+  middleware(GraphQL::Schema::TimeoutMiddleware.new(max_seconds: 2))
+
   OrderByEnum = GraphQL::EnumType.define do
     name 'OrderByEnum'
     description 'Paremeter for ordering resources'
@@ -13,7 +15,4 @@ class MadekGraphqlSchema < GraphQL::Schema
   end
 
   query(Types::QueryType)
-
-
-
 end
