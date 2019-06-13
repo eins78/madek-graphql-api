@@ -75,7 +75,7 @@ describe Types::QueryType do
 
         context 'for query with arguments' do
           let(:query) { media_entries_query(first: 11, order_by: 'CREATED_AT_ASC') }
-          let(:response) { response_data(query, variables)['allMediaEntries'] }
+          let(:response) { response_data(query, nil)['allMediaEntries'] }
           let(:stringified_created_ats) { MediaEntry.order('created_at ASC').
                                           first(11).
                                           pluck(:created_at).
