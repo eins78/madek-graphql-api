@@ -13,9 +13,4 @@ describe Types::MediaEntryType do
       end
     end
   end
-
-
-  def type(type)
-    "GraphQL::Types::#{type}"
-  end
 end

@@ -1,48 +1,12 @@
 module QueriesHelpers
-  def media_entry_query(id)
-    <<-GRAPHQL
-      {
-        mediaEntry(id: "#{id}") {
-          id
-          createdAt
-          title
-        }
-      }
-    GRAPHQL
-  end
-
-  def collection_query(id, first: 2, cursor: nil, order_by: nil)
-    <<-GRAPHQL
-      {
-        collection(id: "#{id}") {
-          id
-          getMetadataAndPreviews
-          createdAt
-          updatedAt
-          layout
-          sorting
-          responsibleUserId
-          mediaEntries(first: #{first}
-                       #{', after: ' if cursor} #{cursor}
-                       #{', orderBy: ' if order_by} #{order_by}) {
-            pageInfo {
-              endCursor
-              startCursor
-              hasPreviousPage
-              hasNextPage
-            }
-            edges {
-              node {
-                id
-                createdAt
-                title
-              }
-            }
-          }
-        }
-      }
-    GRAPHQL
-
+  def media_entry_query
+    "query getMediaEntry($id: ID!) {
+       mediaEntry(id: $id) {
+         id
+         createdAt
+         title
+       }
+     }"
   end
 
   def media_entries_query(first: nil, order_by: nil)
@@ -61,7 +25,67 @@ module QueriesHelpers
     GRAPHQL
   end
 
-  def response_as_hash(query)
-    MadekGraphqlSchema.execute(query).to_h.with_indifferent_access
+  class CollectionQuery
+    def initialize(depth = 1)
+      @depth = depth
+    end
+
+    def query
+      "query getCollection($id: ID!, $first: Int, $cursor: String, $orderBy: OrderByEnum) {
+        collection(id: $id) {
+          #{subqueries}
+        }
+      }"
+    end
+
+    def subqueries
+      "#{collection_attributes}
+       #{media_entries}
+       #{collections if @depth > 0}"
+    end
+
+    def collection_attributes
+      "id
+       getMetadataAndPreviews
+       createdAt
+       updatedAt
+       layout
+       sorting
+       responsibleUserId"
+    end
+
+    def media_entries
+      "mediaEntries(first: $first, after: $cursor, orderBy: $orderBy) {
+         pageInfo {
+           endCursor
+           startCursor
+           hasPreviousPage
+           hasNextPage
+         }
+         edges {
+           node {
+             id
+             createdAt
+             title
+           }
+         }
+       }"
+    end
+
+    def collections
+       "collections(first: $first, after: $cursor, orderBy: $orderBy) {
+         pageInfo {
+           endCursor
+           startCursor
+           hasPreviousPage
+           hasNextPage
+         }
+         edges {
+           node {
+             #{CollectionQuery.new(@depth - 1).subqueries}
+           }
+         }
+       }"
+    end
   end
 end

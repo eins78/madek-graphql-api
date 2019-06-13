@@ -22,5 +22,7 @@ RSpec.configure do |config|
 
   config.include QueriesHelpers
   config.include TypesHelpers
+  config.include CollectionsHelpers
+  config.include ResponsesHelpers
 end
 

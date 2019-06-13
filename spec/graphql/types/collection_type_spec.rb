@@ -17,8 +17,10 @@ describe Types::CollectionType do
       end
     end
 
-    it 'also defines a field mediaEntries that is a connection' do
-      expect(subject.fields['mediaEntries'].connection?).to be(true)
+    %w(mediaEntries collections).each do |connection|
+      it "defines a field #{connection} that is a connection type" do
+        expect(subject.fields[connection].connection?).to be(true)
+      end
     end
   end
 end
