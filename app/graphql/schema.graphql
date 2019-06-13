@@ -1,4 +1,26 @@
 type Collection {
+  collections(
+    """
+    Returns the elements in the list that come after the specified cursor.
+    """
+    after: String
+
+    """
+    Returns the elements in the list that come before the specified cursor.
+    """
+    before: String
+
+    """
+    Returns the first _n_ elements from the list.
+    """
+    first: Int
+
+    """
+    Returns the last _n_ elements from the list.
+    """
+    last: Int
+    orderBy: OrderByEnum
+  ): CollectionConnection
   createdAt: ISO8601DateTime
   getMetadataAndPreviews: Boolean
   id: String
@@ -28,6 +50,41 @@ type Collection {
   responsibleUserId: String
   sorting: String
   updatedAt: ISO8601DateTime
+}
+
+"""
+The connection type for Collection.
+"""
+type CollectionConnection {
+  """
+  A list of edges.
+  """
+  edges: [CollectionEdge]
+
+  """
+  A list of nodes.
+  """
+  nodes: [Collection]
+
+  """
+  Information to aid in pagination.
+  """
+  pageInfo: PageInfo!
+}
+
+"""
+An edge in a connection.
+"""
+type CollectionEdge {
+  """
+  A cursor for use in pagination.
+  """
+  cursor: String!
+
+  """
+  The item at the end of the edge.
+  """
+  node: Collection
 }
 
 """
