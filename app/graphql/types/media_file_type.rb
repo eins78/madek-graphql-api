@@ -5,8 +5,8 @@ module Types
            null: true,
            connection: true do
              argument :media_types,
-                       MadekGraphqlSchema::PreviewMediaTypesEnum,
-                       required: false
+               Types::PreviewMediaTypesEnum,
+               required: false
            end
   end
 end

@@ -18,10 +18,10 @@ module Types
            null: true,
            connection: true do
              argument :orderBy,
-                       MadekGraphqlSchema::OrderByEnum,
+                       Types::OrderByEnum,
                        required: false
              argument :media_types,
-                       MadekGraphqlSchema::MediaEntryMediaTypesEnum,
+                       Types::MediaEntryMediaTypesEnum,
                        required: false
            end
 
@@ -30,7 +30,7 @@ module Types
            null: true,
            connection: true do
              argument :orderBy,
-                       MadekGraphqlSchema::OrderByEnum,
+                       Types::OrderByEnum,
                        required: false
            end
 
@@ -38,7 +38,7 @@ module Types
       object.meta_data.of_type('text')
     end
 
-    def child_media_entries(order_by: nil, media_types: 'image')
+    def child_media_entries(order_by: 'CREATED_AT desc', media_types: 'image')
       object.media_entries.public_visible.
         joins(:media_file).
         where(media_files: {media_type: 'image'} ).

@@ -7,13 +7,13 @@ module Types
            method: :itself do
       description 'Find a Collection by ID'
       argument :id, ID, required: true
-      argument :orderBy,  MadekGraphqlSchema::OrderByEnum, required: false
+      argument :orderBy,  Types::OrderByEnum, required: false
     end
 
     field :all_media_entries, [Types::MediaEntryType], null: true do
       description 'Find all MediaEntries'
       argument :first, Int, required: false
-      argument :orderBy, MadekGraphqlSchema::OrderByEnum, required: false
+      argument :orderBy, Types::OrderByEnum, required: false
     end
 
     field :media_entry, MediaEntryType, null: true do

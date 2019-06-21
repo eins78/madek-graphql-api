@@ -3,8 +3,8 @@ module Types
     field :id, String, null: false
     field :url, String, null: true
     field :content_type, String, null: true
-    field :media_type, MadekGraphqlSchema::PreviewMediaTypesEnum, null: true
-    field :size_class, MadekGraphqlSchema::PreviewSizeClassesEnum, null: true
+    field :media_type, Types::PreviewMediaTypesEnum, null: true
+    field :size_class, Types::PreviewSizeClassesEnum, null: true
 
     def url
       UrlFor.preview(object)
