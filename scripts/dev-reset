@@ -1,5 +1,7 @@
 #!/bin/bash -exu
 
+export DISABLE_DATABASE_ENVIRONMENT_CHECK=1
+
 ./scripts/bundle
 
 cd datalayer
