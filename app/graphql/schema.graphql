@@ -351,14 +351,6 @@ enum PreviewSizeClassesEnum {
   X_LARGE
 }
 
-"""
-Paremeter for ordering resources
-"""
-enum OrderByEnum {
-  CREATED_AT_ASC
-  CREATED_AT_DESC
-}
-
 type Query {
   """
   Find all MediaEntries
