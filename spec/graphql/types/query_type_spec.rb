@@ -89,7 +89,6 @@ describe Types::QueryType do
       end
     end
 
-
     describe Types::QueryType.fields['set'] do
       context 'field' do
         it 'requires and "id" argument of ID type' do
@@ -181,6 +180,5 @@ describe Types::QueryType do
         end
       end
     end
-
   end
 end
