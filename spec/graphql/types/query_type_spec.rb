@@ -182,36 +182,5 @@ describe Types::QueryType do
       end
     end
 
-    def media_entry_query(id)
-      <<-GRAPHQL
-        {
-          mediaEntry(id: "#{id}") {
-            id
-            createdAt
-            title
-          }
-        }
-      GRAPHQL
-    end
-
-    def media_entries_query(first: nil, order_by: nil)
-      first = "first: #{first}" if first
-      order_by = "orderBy: #{order_by}" if order_by
-      params = [first, order_by].join(', ')
-
-      <<-GRAPHQL
-        {
-          allMediaEntries(#{params}) {
-            id
-            createdAt
-            title
-          }
-        }
-      GRAPHQL
-    end
-
-    def response_data_as_hash(query)
-      MadekGraphqlSchema.execute(query).to_h.deep_symbolize_keys[:data]
-    end
   end
-enuuud
+end
