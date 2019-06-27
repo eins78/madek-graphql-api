@@ -80,6 +80,7 @@ module QueriesHelpers
            hasNextPage
          }
          edges {
+           cursor
            node {
              id
              url

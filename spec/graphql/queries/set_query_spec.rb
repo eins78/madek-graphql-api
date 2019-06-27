@@ -1,14 +1,6 @@
 describe 'getCollection' do
-  before(:all) do
-    FactoryGirl.build(:meta_datum_title_with_collection).save(validate: false)
-    # When I try to just create :meta_datum_title_with_collection I get
-    # validation error - media entry must exist - even though there is
-    # collection for the meta data.
-    # I couldn't find why so it's TODO but I want to move forward now
-    @collection = Collection.last
-    @collection.update(get_metadata_and_previews: true)
-    fill_collection_with_media_entries_with_images(@collection, 4)
-    add_meta_data_titles_to_collection_media_entries(@collection)
+  before(:each) do
+    set_collection
   end
 
   let(:collection_keys) { %w(id url metaData childMediaEntries) }
@@ -16,7 +8,6 @@ describe 'getCollection' do
   let(:media_file_keys) { %w(previews) }
   let(:preview_keys) { %w(id url contentType mediaType sizeClass) }
   let(:meta_data_keys) { %w(id metaKey value) }
-  let(:collection_size) { 4 }
   let(:query) { QueriesHelpers::CollectionQuery.new.query }
   let(:variables) { { 'id' => @collection.id, 'mediaTypes' => 'IMAGE' } }
   let(:response_collection) { response_to_h(query, variables)['data']['set'] }
@@ -26,8 +17,6 @@ describe 'getCollection' do
 
   it 'loads collections by ID' do
     expect(response_collection['id']).to eq(@collection.id)
-    expect(response_collection['childMediaEntries']['edges'].size).
-      to eq(collection_size)
     expect(response_collection.keys).to eq(collection_keys)
   end
 
@@ -39,9 +28,8 @@ describe 'getCollection' do
     media_entries = @collection.media_entries
     media_entries.last.update(get_metadata_and_previews:false)
 
-    expect(media_entries.size).to eq(collection_size)
     expect(response_collection['childMediaEntries']['edges'].size).
-      to eq(collection_size - 1)
+      to eq(@collection.media_entries.public_visible.size)
   end
 
   it "returns media file for each media entry" do
@@ -65,5 +53,13 @@ describe 'getCollection' do
       to be
     expect(sample_node_of(response_media_entry['metaData'])['value']['string']).
       to be
+  end
+
+
+  def set_collection
+    @collection = FactoryGirl.create(:collection, get_metadata_and_previews: true)
+    FactoryGirl.create(:meta_datum_title_with_collection, collection: @collection)
+    fill_collection_with_media_entries_with_images(@collection, 4)
+    add_meta_data_titles_to_collection_media_entries(@collection)
   end
 end

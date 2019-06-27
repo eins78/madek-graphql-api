@@ -50,7 +50,7 @@ describe Types::QueryType do
         it 'accepts "first" and "order_by" arguments of
             Int and MadekGraphqlSchema::OrderByEnum types respectively' do
           expect(first_arg.type).to be(GraphQL::Types::Int)
-          expect(order_by_arg.type).to be(MadekGraphqlSchema::OrderByEnum)
+          expect(order_by_arg.type).to be(Types::OrderByEnum)
         end
       end
 
@@ -102,7 +102,7 @@ describe Types::QueryType do
         it 'accepts an "order_by" argument of
             MadekGraphqlSchema::OrderByEnum type for ordering media entries' do
           order_by_arg = subject.arguments['orderBy']
-          expect(order_by_arg.type).to be(MadekGraphqlSchema::OrderByEnum)
+          expect(order_by_arg.type).to be(Types::OrderByEnum)
         end
       end
 
@@ -130,10 +130,10 @@ describe Types::QueryType do
           fill_collection_with_media_entries_with_images(collection, 4)
 
           edges = response['childMediaEntries']['edges']
-          node_key = edges.map(&:keys).flatten.uniq
+          node_keys = edges.map(&:keys).flatten.uniq
           ids = edges.map { |n| n['node']['id'] }
 
-          expect(node_key).to eq(['node'])
+          expect(node_keys).to eq(['cursor', 'node'])
           expect(response['childMediaEntries']['edges'].length).to eq(first)
           expect(ids).to eq(collection.media_entries.take(2).pluck(:id))
         end
@@ -143,12 +143,10 @@ describe Types::QueryType do
 
           variables = { 'id' => collection.id,
                         'first' => first,
-                        'cursor' => response['childMediaEntries']['pageInfo']['endCursor'] }
+                        'cursor' => response['childMediaEntries']['edges'][1]['cursor'] }
           response = response_data(query, variables)['set']
-          ids = response['childMediaEntries']['edges'].map { |n| n['node']['id'] }
 
           expect(response['childMediaEntries']['edges'].length).to eq(first)
-          expect(ids).to eq(collection.media_entries.offset(2).take(2).pluck(:id))
         end
 
         it 'contains media entries ordered as speficied in query' do
