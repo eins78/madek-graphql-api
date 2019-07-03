@@ -4,5 +4,7 @@ class Types::MediaEntryMediaTypesEnum < Types::BaseEnum
 
   description 'Media entry media types'
   value 'IMAGE', value: 'image'
+  value 'VIDEO', value: 'video'
+  value 'AUDIO', value: 'audio'
 end
 

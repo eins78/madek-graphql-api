@@ -21,7 +21,7 @@ module Types
                        Types::OrderByEnum,
                        required: false
              argument :media_types,
-                       Types::MediaEntryMediaTypesEnum,
+                       [Types::MediaEntryMediaTypesEnum],
                        required: false
            end
 
@@ -41,7 +41,7 @@ module Types
     def child_media_entries(order_by: 'CREATED_AT desc', media_types: 'image')
       object.media_entries.public_visible.
         joins(:media_file).
-        where(media_files: {media_type: 'image'} ).
+        where(media_files: {media_type: media_types}).
         order(order_by)
     end
 

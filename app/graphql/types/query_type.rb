@@ -22,7 +22,12 @@ module Types
     end
 
     def set(id:)
-      collection = Collection.find(id)
+      begin
+        collection = Collection.find(id)
+      rescue ActiveRecord::RecordNotFound
+        MadekErrors::NotFound.new
+      end
+
       PublicPermissionCheck.for(collection)
       collection
     end

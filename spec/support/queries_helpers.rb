@@ -37,7 +37,8 @@ module QueriesHelpers
                            $first: Int,
                            $cursor: String,
                            $orderBy: OrderByEnum,
-                           $mediaTypes: MediaEntryMediaTypesEnum) {
+                           $mediaEntriesMediaTypes: [MediaEntryMediaTypesEnum!]!,
+                           $previewsMediaTypes: [PreviewsMediaTypesEnum!]!) {
         set(id: $id) {
           #{subqueries}
         }
@@ -60,7 +61,7 @@ module QueriesHelpers
              metaKey {
                id
              }
-             value {
+             values {
                string
              }
            }
@@ -72,7 +73,7 @@ module QueriesHelpers
       "childMediaEntries(first: $first,
                          after: $cursor,
                          orderBy: $orderBy,
-                         mediaTypes: $mediaTypes) {
+                         mediaTypes: $mediaEntriesMediaTypes) {
          pageInfo {
            endCursor
            startCursor
@@ -91,14 +92,14 @@ module QueriesHelpers
                    metaKey {
                      id
                    }
-                   value {
+                   values {
                      string
                    }
                  }
                }
              }
              mediaFile {
-               previews {
+               previews(mediaTypes: $previewsMediaTypes) {
                  edges {
                    node {
                      id

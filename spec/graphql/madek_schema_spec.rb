@@ -6,7 +6,10 @@ describe MadekGraphqlSchema do
     collection = FactoryGirl.create(:collection)
     fill_collection_with_nested_collections(collection, 10)
     query = QueriesHelpers::CollectionQuery.new(10).query
-    response = response_to_h(query, { 'id' => collection.id })
+    variables = { 'id' => collection.id,
+                  'mediaEntriesMediaTypes' => ['IMAGE', 'AUDIO'],
+                  'previewsMediaTypes' => ['IMAGE', 'AUDIO'] }
+    response = response_to_h(query, variables)
 
     expect(response['errors'].first['message']).
       to include('exceeds max depth of 25')
@@ -21,7 +24,9 @@ describe MadekGraphqlSchema do
 
   context 'media entries' do
     let(:media_entry) { FactoryGirl.create(:media_entry_with_title) }
-    let(:variables) { { "id" => media_entry.id } }
+    let(:variables) { { "id" => media_entry.id,
+                        'mediaEntriesMediaTypes' => ['AUDIO'],
+                        'previewsMediaTypes' => ['IMAGE'] } }
     let(:result) { response_data(media_entry_query, variables) }
 
     it 'loads media entries by ID' do

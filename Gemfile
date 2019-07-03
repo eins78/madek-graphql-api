@@ -15,13 +15,13 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'chronic_duration'
   gem 'factory_girl', '~> 4.8.1'
+  gem 'faker'
   gem 'pry'
   gem 'pry-nav'
   gem 'uuidtools'
 end
 
 group :development do
-  gem 'faker'
   gem 'graphiql-rails'
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'spring'
@@ -29,7 +29,6 @@ group :development do
 end
 
 group :test do
-  gem 'faker'
   gem 'pg_tasks', git: 'https://github.com/drtom/rails_pg-tasks', branch: 'master_rails_5'
   gem 'rspec-rails'
   gem 'rspec-graphql_matchers'

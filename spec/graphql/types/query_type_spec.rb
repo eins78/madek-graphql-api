@@ -113,11 +113,16 @@ describe Types::QueryType do
         let(:query) { QueriesHelpers::CollectionQuery.new(0).query }
         let(:variables) { { 'id' => collection.id,
                             'first' => first,
-                            'orderBy' => 'CREATED_AT_ASC' } }
+                            'orderBy' => 'CREATED_AT_ASC',
+                            'mediaEntriesMediaTypes' => ['IMAGE', 'AUDIO'],
+                            'previewsMediaTypes' => ['IMAGE', 'AUDIO'] } }
         let(:response) { response_data(query, variables)['set'] }
 
         it 'contains an error when collection is not public' do
-          expect(response_to_h(query, {'id' => private_collection.id})['errors'][0]['message']).
+          variables = {'id' => private_collection.id,
+                       'mediaEntriesMediaTypes' => ['IMAGE', 'AUDIO'],
+                       'previewsMediaTypes' => ['IMAGE', 'AUDIO'] }
+          expect(response_to_h(query,  variables)['errors'][0]['message']).
             to eq('This collection is not public.')
         end
 
@@ -142,7 +147,9 @@ describe Types::QueryType do
 
           variables = { 'id' => collection.id,
                         'first' => first,
-                        'cursor' => response['childMediaEntries']['edges'][1]['cursor'] }
+                        'cursor' => response['childMediaEntries']['edges'][1]['cursor'],
+                        'mediaEntriesMediaTypes' => ['IMAGE', 'AUDIO'],
+                        'previewsMediaTypes' => ['IMAGE', 'AUDIO'] }
           response = response_data(query, variables)['set']
 
           expect(response['childMediaEntries']['edges'].length).to eq(first)
@@ -154,7 +161,9 @@ describe Types::QueryType do
           query = QueriesHelpers::CollectionQuery.new(0).query
           variables = { 'id' => collection.id,
                        'first' => collection.media_entries.length,
-                       'orderBy' => 'CREATED_AT_ASC' }
+                       'orderBy' => 'CREATED_AT_ASC',
+                       'mediaEntriesMediaTypes' => ['IMAGE', 'AUDIO'],
+                       'previewsMediaTypes' => ['IMAGE', 'AUDIO'] }
           response = response_data(query, variables)['set']
 
           ids = response['childMediaEntries']['edges'].map { |n| n['node']['id'] }
@@ -172,7 +181,9 @@ describe Types::QueryType do
           fill_collection_with_nested_collections(collection, 5)
 
           query = QueriesHelpers::CollectionQuery.new(5).query
-          variables = { 'id' => collection.id }
+          variables = { 'id' => collection.id,
+                        'mediaEntriesMediaTypes' => ['IMAGE', 'AUDIO'],
+                        'previewsMediaTypes' => ['IMAGE', 'AUDIO'] }
           response = response_data(query, variables)['set']
 
           expect(node_from_nested_connection(response, 'sets', 5)).to be

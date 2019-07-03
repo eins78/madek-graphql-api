@@ -19,7 +19,7 @@ type Collection {
     Returns the last _n_ elements from the list.
     """
     last: Int
-    mediaTypes: MediaEntryMediaTypesEnum
+    mediaTypes: [MediaEntryMediaTypesEnum!]
     orderBy: OrderByEnum
   ): MediaEntryConnection
   createdAt: ISO8601DateTime
@@ -183,7 +183,9 @@ type MediaEntryEdge {
 Media entry media types
 """
 enum MediaEntryMediaTypesEnum {
+  AUDIO
   IMAGE
+  VIDEO
 }
 
 type MediaFile {
@@ -207,14 +209,14 @@ type MediaFile {
     Returns the last _n_ elements from the list.
     """
     last: Int
-    mediaTypes: PreviewMediaTypesEnum
+    mediaTypes: [PreviewsMediaTypesEnum!]
   ): PreviewConnection
 }
 
 type MetaData {
   id: String
   metaKey: MetaKey
-  value: Value
+  values: [Value!]
 }
 
 """
@@ -292,7 +294,7 @@ type PageInfo {
 type Preview {
   contentType: String
   id: String!
-  mediaType: PreviewMediaTypesEnum
+  mediaType: PreviewsMediaTypesEnum
   sizeClass: PreviewSizeClassesEnum
   url: String
 }
@@ -333,13 +335,6 @@ type PreviewEdge {
 }
 
 """
-Preview media types
-"""
-enum PreviewMediaTypesEnum {
-  IMAGE
-}
-
-"""
 Preview size class
 """
 enum PreviewSizeClassesEnum {
@@ -349,6 +344,15 @@ enum PreviewSizeClassesEnum {
   SMALL
   SMALL_125
   X_LARGE
+}
+
+"""
+Previews media types
+"""
+enum PreviewsMediaTypesEnum {
+  AUDIO
+  IMAGE
+  VIDEO
 }
 
 type Query {

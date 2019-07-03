@@ -7,9 +7,11 @@ describe 'getCollection' do
   let(:media_entry_keys) { %w(id url metaData mediaFile) }
   let(:media_file_keys) { %w(previews) }
   let(:preview_keys) { %w(id url contentType mediaType sizeClass) }
-  let(:meta_data_keys) { %w(id metaKey value) }
+  let(:meta_data_keys) { %w(id metaKey values) }
   let(:query) { QueriesHelpers::CollectionQuery.new.query }
-  let(:variables) { { 'id' => @collection.id, 'mediaTypes' => 'IMAGE' } }
+  let(:variables) { { 'id' => @collection.id,
+                      'mediaEntriesMediaTypes' => ['IMAGE', 'AUDIO'],
+                      'previewsMediaTypes' => ['IMAGE', 'AUDIO'] } }
   let(:response_collection) { response_to_h(query, variables)['data']['set'] }
   let(:response_media_entry) { sample_node_of(response_collection['childMediaEntries']) }
   let(:response_media_file) { response_media_entry['mediaFile'] }
@@ -45,13 +47,13 @@ describe 'getCollection' do
       to eq(meta_data_keys)
     expect(sample_node_of(response_collection['metaData'])['metaKey']['id']).
       to be
-    expect(sample_node_of(response_collection['metaData'])['value']['string']).
+    expect(sample_node_of(response_collection['metaData'])['values'][0]['string']).
       to be
     expect(sample_node_of(response_media_entry['metaData']).keys).
       to eq(meta_data_keys)
     expect(sample_node_of(response_media_entry['metaData'])['metaKey']['id']).
       to be
-    expect(sample_node_of(response_media_entry['metaData'])['value']['string']).
+    expect(sample_node_of(response_media_entry['metaData'])['values'][0]['string']).
       to be
   end
 

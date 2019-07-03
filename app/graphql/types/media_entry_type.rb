@@ -5,8 +5,8 @@ module Types
     field :title, String, null: true
     field :url, String, null: true
     field :meta_data,
-           MetaDataType.connection_type,
-           null: true
+          MetaDataType.connection_type,
+          null: true
     field :media_file, MediaFileType, null: true
 
     def id
@@ -15,10 +15,6 @@ module Types
 
     def url
       UrlFor.media_entry(object)
-    end
-
-    def meta_data
-      object.meta_data.of_type('text')
     end
   end
 end
