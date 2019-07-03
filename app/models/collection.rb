@@ -69,7 +69,7 @@ class Collection < ApplicationRecord
       .order(:created_at, :id)
   }
 
-  default_scope { where(clipboard_user_id: nil).reorder(:created_at, :id) }
+  #default_scope { where(clipboard_user_id: nil).reorder(:created_at, :id) }
 
   # NOTE: could possibly be made as a DB trigger
   # NOTE: disabled because there is no workflow yet

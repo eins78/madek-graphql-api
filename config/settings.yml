@@ -1,0 +1,8 @@
+test:
+  madek_url: https://medienarchiv.zhdk.ch
+
+development:
+  madek_url: https://medienarchiv.zhdk.ch
+
+production:
+  madek_url: https://medienarchiv.zhdk.ch

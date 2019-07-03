@@ -17,6 +17,9 @@ module Concerns
         scope :of_filter_set, lambda { |id|
           where(filter_set_id: id)
         }
+        scope :of_type, lambda { |type|
+          where(type: "MetaDatum::#{type.capitalize}")
+        }
       end
     end
   end
