@@ -4,4 +4,4 @@ require 'pry'
 require 'config/rspec'
 require 'config/rails'
 require 'config/database'
-
+require 'config/graphql'
