@@ -1,10 +1,12 @@
 # NOTE: based on <https://github.com/leihs/leihs-procure/blob/6b51ac57c1d7764831c8fad94d05f84b0bf7882e/server/spec/graphql/graphql_helper.rb>
 #       but adapted to use request-type rails spec helpers
 
+require 'graphql'
 require 'graphql/client'
 require 'graphql/client/http'
 
 module MadekAPI
+  Schema = GraphQL::Client.load_schema(MadekGraphqlSchema)
   Client =
     GraphQL::Client.new(schema: MadekGraphqlSchema, execute: MadekGraphqlSchema)
   Client.allow_dynamic_queries = true # for testing
@@ -32,7 +34,7 @@ class GraphqlQuery
 
     doc = MadekAPI::Client.parse(@document)
 
-    # TODO: execute client but ActionDispatch instead of HTTP as transport
+    # TODO: execute client but ActionDispatczh instead of HTTP as transport
     # result = MadekAPI::Client.query(doc)
 
     @http_client.post(URL, options)
