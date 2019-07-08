@@ -32,6 +32,7 @@ group :test do
   gem 'pg_tasks', git: 'https://github.com/drtom/rails_pg-tasks', branch: 'master_rails_5'
   gem 'rspec-rails'
   gem 'rspec-graphql_matchers'
+  gem 'graphql-client'
 end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

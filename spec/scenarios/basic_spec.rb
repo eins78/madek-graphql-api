@@ -28,6 +28,19 @@ describe 'Request-based GraphQL integration tests', type: :request do
       )
     end
 
+    example 'invalid query non-existing field' do
+      doc = <<-'GRAPHQL'
+        query {
+          nonExisitingField
+        }
+      GRAPHQL
+
+      expect { graphql_request(doc).result }.to raise_error(
+        GraphQL::Client::ValidationError,
+        "Field 'nonExisitingField' doesn't exist on type 'Query'"
+      )
+    end
+
     context 'variables' do
       let(:doc) do
         <<-GRAPHQL
